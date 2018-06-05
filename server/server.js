@@ -10,6 +10,18 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
+app.get('/todos', (req, res) => {
+
+    console.log('In Get todos');
+    Todo.find().then((todos) => {
+            console.log('In response', todos);
+            res.send({todos});
+    }, (e) => {
+        res.status(400).send(e);
+    });
+
+});
+
 app.post('/todos', (req, res) => {
 
     var todo = new Todo({
