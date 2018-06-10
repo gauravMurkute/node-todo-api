@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 
  var app = express();
 
+ const port = process.env.port || 3000;
+
 app.use(bodyParser.json());
 
 app.get('/todos/:id', (req, res) => {
@@ -27,7 +29,7 @@ app.get('/todos/:id', (req, res) => {
             res.status(404).send();
         }
 
-        res.send({todo});
+        res.send({todo} );
     })
     .catch((e) => {
 
@@ -62,9 +64,9 @@ app.post('/todos', (req, res) => {
 });
 
 
- app.listen(3000, () => {
+ app.listen(port, () => {
 
-        console.log('Started on port 3000');
+        console.log(`Started on port ${3000}`);
  });
 
  module.exports = {
