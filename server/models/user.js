@@ -38,33 +38,6 @@ var UserSchema = new mongoose.Schema({
 
 
 
-//UserSchema.statics.findByCredentials = function(email, password) {
-
-        // var User = this;
-
-        // User.findOne({email}).then((user) => {
-
-        //     if(!user)
-        //     {
-        //         return Promise.reject();
-        //     }
-
-        //     return new Promise((resolve, reject) => {
-
-        //         bcrypt.compare(password, user.password, (err, res) => {
-        //             if(res)
-        //             {
-        //                 resolve(user);
-        //             }
-        //             else
-        //             {
-        //                 reject();
-        //             }
-        //         })
-        //     });
-        // })
-//};
-
 
 UserSchema.statics.findByCredentials = function (email, password) {
 
@@ -103,7 +76,7 @@ UserSchema.statics.findByToken =  function (token) {
 
     try
     {
-        decoded = jwt.verify(token, 'abc123');
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
     }
     catch(e)
     {
@@ -145,7 +118,7 @@ UserSchema.methods.generateAuthToken = function () {
     var access = 'auth'
     var token = jwt.sign({
         _id: user._id.toHexString(), 
-        access}, 'abc123').toString();
+        access}, process.env.JWT_SECRET).toString();
 
     user.tokens = user.tokens.concat([{access, token}]);
 
